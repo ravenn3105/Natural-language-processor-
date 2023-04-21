@@ -37,46 +37,47 @@ def takecommand():
         query= r.recognize_google(audio,language='en-in')
         print("user said:", query)
     except Exception as e:
-        print(e)
+        #print(e)
         speak("say that again please.......")
         return "none"
     return query
 
+
 if __name__=='__main__':
     wishme(datetime)
-    if 1:
-        query = takecommand().lower()
+    while True:
+    # if 1:
+            query = takecommand().lower()
+            if 'wikipedia' in query:
+                speak('Searching Wikipedia...')
+                query = query.replace("wikipedia", "")
+                results = wikipedia.summary(query, sentences=2)
+                speak("According to Wikipedia")
+                print(results)
+                speak(results)
+            elif "open youtube " in query:
+                webbrowser.open("youtube.com")
 
-        if 'wikipedia' in query:
-            speak('searching wikipedia...... please wait')
-            query= query.replace("wikipedia","")
-            results= wikipedia.summary(query, sentence=2)
-            speak("according to wikipedia")
-            print(results)
+            elif "open google " in query:
+                webbrowser.open("google.com")
 
-        elif "open youtube " in query:
-            webbrowser.open("youtube.com")
+            elif "open notepad" in query:
+                osCommandString = "notepad.exe file.txt"
+                os.system(osCommandString)
+                
+            elif 'open command prompt' in query:
+                os.system('start cmd')
 
-        elif "open google " in query:
-            webbrowser.open("google.com")
+            elif 'open stackflow' in query:
+                webbrowser.open('stackoverflow.com')
 
-        elif "open notepad" in query:
-            path= '%windir%\\system32\\notepad.exe'
-            os.startfile(path)
-        elif 'open command prompt' in query:
-            os.system('start cmd')
+            elif 'open calender' in query:
+                webbrowser.open('calendar.google.com')
 
-        elif 'open stackflow' in query:
-            webbrowser.open('stacklow.com')
+            elif 'time ' in query:
+                strTime = datetime.datetime.now().strftime("%H:%M:%S")
+                speak(f"The time is {strTime}")
 
-        elif 'open calender' in query:
-            webbrowser.open('calender.com')
-
-        elif 'time ' in query:
-            strTime= datetime.datetime.now().strftime("%H:%M:%S")
-            speak(f"Sir, the time is {strTime}")
-
-        elif 'no thanks' in query:
-            speak(" thank you for using me. have a good day")
-
-sys.exit()
+            elif 'no thanks' in query:
+                speak(" thank you for using me. have a good day")
+                sys.exit()
